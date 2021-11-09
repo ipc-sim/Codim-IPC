@@ -1,0 +1,5 @@
+Language: Cpp
+AlwaysBreakTemplateDeclarations: Yes
+ColumnLimit: 120
+IndentWidth: 4
+AccessModifierOffset: -4

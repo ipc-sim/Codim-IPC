@@ -1,0 +1,18 @@
+FILE *out = fopen("needleBed.seg", "w");
+double L = 1, l = 0.1;
+int n = 20;
+double step = L / n;
+for (int i = 0; i < n; ++i) {
+for (int j = 0; j < n; ++j) {
+    fprintf(out, "v %le %le %le\n", step / 2 + i * step - L / 2, -l, step / 2 + j * step - L / 2);
+    fprintf(out, "v %le 0 %le\n", step / 2 + i * step - L / 2, step / 2 + j * step - L / 2);
+}
+}
+for (int i = 0; i < n; ++i) {
+for (int j = 0; j < n; ++j) {
+    int start = (i * n + j) * 2 + 1;
+    fprintf(out, "s %d %d\n", start, start + 1);
+}
+}
+fclose(out);
+exit(0);
