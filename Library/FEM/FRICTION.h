@@ -213,7 +213,7 @@ void Compute_Friction_Potential(
                 Eigen::Matrix<T, 3, 1> dp(dXp.data);
                 if (cIVInd[2] < 0) {
                     // -+-[-] PP, last digit stores muliplicity
-                    const VECTOR<T, 3>& dXp1 = std::get<0>(X.Get_Unchecked(cIVInd[1]));
+                    const VECTOR<T, 3>& dXp1 = std::get<0>(dX.Get_Unchecked(cIVInd[1]));
                     Eigen::Matrix<T, 3, 1> dp1(dXp1.data);
 
                     Point_Point_RelDX(dp, dp1, relDX3D);
@@ -308,7 +308,7 @@ void Compute_Friction_Gradient(
                 Eigen::Matrix<T, 3, 1> dp(dXp.data);
                 if (cIVInd[2] < 0) {
                     // -+-[-] PP, last digit stores muliplicity
-                    const VECTOR<T, 3>& dXp1 = std::get<0>(X.Get_Unchecked(cIVInd[1]));
+                    const VECTOR<T, 3>& dXp1 = std::get<0>(dX.Get_Unchecked(cIVInd[1]));
                     Eigen::Matrix<T, 3, 1> dp1(dXp1.data);
 
                     Point_Point_RelDX(dp, dp1, relDX3D);
@@ -492,7 +492,7 @@ void Compute_Friction_Hessian(
                 Eigen::Matrix<T, 3, 1> dp(dXp.data);
                 if (cIVInd[2] < 0) {
                     // -+-[-] PP, last digit stores muliplicity
-                    const VECTOR<T, 3>& dXp1 = std::get<0>(X.Get_Unchecked(cIVInd[1]));
+                    const VECTOR<T, 3>& dXp1 = std::get<0>(dX.Get_Unchecked(cIVInd[1]));
                     Eigen::Matrix<T, 3, 1> dp1(dXp1.data);
 
                     Point_Point_RelDX(dp, dp1, relDX3D);
