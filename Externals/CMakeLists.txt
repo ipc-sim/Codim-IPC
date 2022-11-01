@@ -39,19 +39,6 @@ if (ENABLE_AMGCL_CUDA)
   add_subdirectory(${VexCL_SOURCE_DIR} ${VexCL_BINARY_DIR})
 endif()
 
-download_project(
-  PROJ partio
-  GIT_REPOSITORY https://github.com/wdas/partio.git
-  GIT_TAG v1.10.0
-  UPDATE_DISCONNECTED 1
-  )
-add_subdirectory(${partio_SOURCE_DIR} ${partio_BINARY_DIR})
-set_target_properties(partio PROPERTIES
-    INTERFACE_INCLUDE_DIRECTORIES "${partio_SOURCE_DIR}/src/lib"
-    INTERFACE_SYSTEM_INCLUDE_DIRECTORIES "${partio_SOURCE_DIR}/src/lib"
-    INTERFACE_LINK_LIBRARIES "z"
-)
-
 # Download and add Kokkos
 download_project(
   PROJ Kokkos

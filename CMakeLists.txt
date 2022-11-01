@@ -48,10 +48,12 @@ else()
   message("Linear solver: use Eigen (default)")
 endif()
 
+find_package(GLUT REQUIRED)
+
 if(LINEAR_SOLVER STREQUAL "CHOLMOD")
-  set(JGSL_DEPS partio Kokkos::kokkos cabanacore eigen amgcl TBB::tbb SuiteSparse::SuiteSparse)
+  set(JGSL_DEPS Kokkos::kokkos cabanacore eigen amgcl TBB::tbb SuiteSparse::SuiteSparse ${GLUT_LIBRARY})
 else()
-  set(JGSL_DEPS partio Kokkos::kokkos cabanacore eigen amgcl)
+  set(JGSL_DEPS Kokkos::kokkos cabanacore eigen amgcl ${GLUT_LIBRARY})
 endif()
 
 target_include_directories(JGSL SYSTEM PUBLIC ${EIGEN3_INCLUDE_DIR} ${Boost_INCLUDE_DIRS})
