@@ -673,6 +673,7 @@ int Advance_One_Step_IE_Discrete_Shell(
         if (resRecord.size() > 3) {
             resRecord.pop_front();
         }
+        T curL2Norm = L2Norm;
         L2Norm = *std::max_element(resRecord.begin(), resRecord.end());
 
         if (useGD) {
@@ -681,14 +682,24 @@ int Advance_One_Step_IE_Discrete_Shell(
 
         if (alpha * 2 < 1e-8 && feasibleAlpha > 1e-8) {
             if (!useGD) {
-                useGD = true;
-                Eigen::VectorXd pe(sol.size()), mge(rhs.size());
-                std::memcpy(pe.data(), sol.data(), sizeof(T) * sol.size());
-                std::memcpy(mge.data(), rhs.data(), sizeof(T) * rhs.size());
-                printf("-gdotp = %le, -gpcos = %le\n", mge.dot(pe), 
-                    mge.dot(pe) / std::sqrt(mge.squaredNorm() * pe.squaredNorm()));
-                printf("linear solve relErr = %le\n", 
-                    std::sqrt((sysMtr.Get_Matrix() * pe - mge).squaredNorm() / mge.squaredNorm()));
+                if (curL2Norm < NewtonTol) {
+                    //NOTE: tiny step size is expected when L2Norm is tiny,
+                    // now if curL2Norm < NewtonTol, the requested accuracy is reached,
+                    // and the optimization should terminate without trying gradient descent or
+                    // wait until 3 iterations
+                    resRecord.resize(3);
+                    resRecord[0] = resRecord[1] = resRecord[2] = curL2Norm;
+                }
+                else {
+                    useGD = true;
+                    Eigen::VectorXd pe(sol.size()), mge(rhs.size());
+                    std::memcpy(pe.data(), sol.data(), sizeof(T) * sol.size());
+                    std::memcpy(mge.data(), rhs.data(), sizeof(T) * rhs.size());
+                    printf("-gdotp = %le, -gpcos = %le\n", mge.dot(pe), 
+                        mge.dot(pe) / std::sqrt(mge.squaredNorm() * pe.squaredNorm()));
+                    printf("linear solve relErr = %le\n", 
+                        std::sqrt((sysMtr.Get_Matrix() * pe - mge).squaredNorm() / mge.squaredNorm()));
+                }
             }
             else {
                 printf("GD tiny step size!\n");
