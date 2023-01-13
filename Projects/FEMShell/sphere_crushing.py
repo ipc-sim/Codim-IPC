@@ -69,7 +69,7 @@ def run(elasticity=1e5):
     #Density = 1000  
     #Young's Modulus (For elasticity) = 1e5 (Value closer to one means more rigid body ,so the object doesn't deform)
     #Poission's Ratio = 0.4 (We are only applying parallel force and the shear force is only at the end of simulation when plane slides off. So, this shouldn't matter much)
-    sim.initialize_added_objects(Vector3d(0, 0, 0), 1000,s 1e5, 0.4)
+    sim.initialize_added_objects(Vector3d(0, 0, 0), 1000,1e5, 0.4)
 
     #We make the Upper plane more dense (2 times) and more rigid (10000 times) so that it doesn't deform and the impact on sphere is more 
     sim.adjust_material(ceilingPlane, 2, 1e4)
